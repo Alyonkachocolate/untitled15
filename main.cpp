@@ -14,7 +14,7 @@ int main() {
     unsigned int VI=485;
     std::uniform_int_distribution<> range{0, 0xFFF};
     std::default_random_engine random_number_generator(VI);
-//шиврование
+//шифрование
     string s,cipher;
     cin>>s;
     int len=s.length();
@@ -27,7 +27,7 @@ int main() {
     int i=0;
     while (i<len)
     {
-        if (s[i+1]!=s[len])
+        if (i+1!=len)
         {
             unsigned short cc=((unsigned short)s[i]<<8)|((unsigned short)s[i+1]);
             //cout<<"cc= "<<bitset<16>(cc)<<endl;
