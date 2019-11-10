@@ -18,11 +18,9 @@ int main() {
     string s,cipher;
     cin>>s;
     int len=s.length();
-    char c;
     if (len%2!=0)
     {
         s[len]=206; //код 206
-        c=s[len];
     }
     int i=0;
     while (i<len)
