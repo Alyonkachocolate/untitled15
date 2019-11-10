@@ -14,55 +14,36 @@ int main() {
     unsigned int VI=485;
     std::uniform_int_distribution<> range{0, 0xFFF};
     std::default_random_engine random_number_generator(VI);
-//шиврование
+//шифрование
     string s,cipher;
     cin>>s;
     int len=s.length();
-    char c;
     if (len%2!=0)
     {
         s[len]=206; //код 206
-        c=s[len];
     }
     int i=0;
     while (i<len)
     {
-        if (s[i+1]!=s[len])
-        {
-            unsigned short cc=((unsigned short)s[i]<<8)|((unsigned short)s[i+1]);
-            //cout<<"cc= "<<bitset<16>(cc)<<endl;
-            short random_number = range(random_number_generator);
-            //cout<<"rd= "<<bitset<16>(random_number)<<endl;
-            unsigned short d;
-            d=cc^random_number;
-            //cout<<"d1= "<<bitset<16>(d)<<endl;
-            d=(d>>4)|(d<<(12));
-            //cout<<"d2= "<<bitset<16>(d)<<endl;
-            unsigned char c1=d>>8;
-            //cout<<"c1= "<<bitset<16>(c1)<<endl;
-            cipher.push_back(c1);
-            unsigned char c2 = d;
-            //cout<<"c2= "<<bitset<16>(c2)<<endl;
-            cipher.push_back(c2);
-        }
-        else
-        {
-            unsigned short cc=((unsigned short)s[i]<<8)|((unsigned short)s[i+1]);
-            cout<<"cc= "<<bitset<16>(cc)<<endl;
-            short random_number = range(random_number_generator);
-            cout<<"rd= "<<bitset<16>(random_number)<<endl;
-            unsigned short d;
-            d=cc^random_number;
-            cout<<"d1= "<<bitset<16>(d)<<endl;
-            d=(d>>4)|(d<<(12));
-            cout<<"d2= "<<bitset<16>(d)<<endl;
-            unsigned char c1=d>>8;
-            cout<<"c1= "<<bitset<16>(c1)<<endl;
-            cipher.push_back(c1);
-        }
+        unsigned short cc= (unsigned short) s[i] << 8 | ((unsigned short) s[i + 1] & 0xFF);
+        cout<<i<<": cc= "<<bitset<16>(cc)<<endl;
+        short random_number = range(random_number_generator);
+        //cout<<"rd= "<<bitset<16>(random_number)<<endl;
+        unsigned short d;
+        d=cc^random_number;
+        //cout<<"d1= "<<bitset<16>(d)<<endl;
+        d=(d>>4)|(d<<(12));
+        //cout<<"d2= "<<bitset<16>(d)<<endl;
+        unsigned char c1=d>>8;
+        //cout<<"c1= "<<bitset<16>(c1)<<endl;
+        cipher.push_back(c1);
+        unsigned char c2 = d;
+        //cout<<"c2= "<<bitset<16>(c2)<<endl;
+        cipher.push_back(c2);
         i+=2;
     }
-    cout<<"сipher:"<<cipher<<endl;
+    for (char &c : cipher) cout << bitset<8>(c) << " ";
+    cout<<endl<<"сipher:"<<cipher<<endl;
 //    cout<<"сipher:"<<cipher[1]<<endl;
 //    cout<<"(short)cipher[0]="<<(unsigned short)cipher[0]<<' '<<"(short)cipher[1]="<<(unsigned short)cipher[1]<<endl;
 //    cout<<"cipher.length()="<<cipher.length()<<endl;
